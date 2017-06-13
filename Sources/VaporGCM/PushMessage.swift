@@ -32,6 +32,14 @@ public struct PushMessage {
     ///This parameter, when set to true, allows developers to test a request without actually sending a message.
     public var dryRun: Bool?
     
+    /// represents content-available in the APNs payload (Silent Push Notification)
+    /// App receives the notification silently in background without a user prompt
+    public var contentAvailable: Bool?
+    
+    /// represents content-available in the APNs payload 
+    /// push notification gets first passed to the app's Notification Service extension which can modify the message before it gets displayed
+    public var mutableContent: Bool?
+    
     public init(gcmPayload: GCMPayload? = nil, data: JSON? = nil) throws {
         self.gcmPayload = gcmPayload
         self.data = data
@@ -49,6 +57,12 @@ public struct PushMessage {
         }
         if let priority = priority?.rawValue {
             payloadData["priority"] = priority
+        }
+        if let isSilent = contentAvailable {
+            payloadData["content_available"] = isSilent
+        }
+        if let mutable = mutableContent {
+            payloadData["mutable_content"] = mutable
         }
         if let time = timeToLive {
             payloadData["time_to_live"] = time
