@@ -34,10 +34,12 @@ public struct PushMessage {
     
     /// represents content-available in the APNs payload (Silent Push Notification)
     /// App receives the notification silently in background without a user prompt
+    /// -> https://firebase.google.com/docs/cloud-messaging/http-server-ref
     public var contentAvailable: Bool?
     
     /// represents content-available in the APNs payload 
     /// push notification gets first passed to the app's Notification Service extension which can modify the message before it gets displayed
+    /// -> https://firebase.google.com/docs/cloud-messaging/http-server-ref
     public var mutableContent: Bool?
     
     public init(gcmPayload: GCMPayload? = nil, data: JSON? = nil) throws {
