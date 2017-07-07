@@ -60,7 +60,7 @@ open class VaporGCM {
         for token in deviceTokens {
             do {
                 let body = try Body(message.makeJSON(recipient: token))
-                let response = try drop.client.post(strongSelf.baseURL, headers, body)
+                let response = try drop.client.post(self.baseURL, headers, body)
                 responseHandler?(token, response, nil)
             } catch {
                 responseHandler?(token, nil, error)
