@@ -56,6 +56,17 @@ open class VaporGCM {
             "Authorization":"key=\(key)",
             "Content-Type":"application/json"
         ]
+        
+        for token in deviceTokens {
+            do {
+                let body = try Body(message.makeJSON(recipient: token))
+                let response = try drop.client.post(strongSelf.baseURL, headers, body)
+                responseHandler?(token, response, nil)
+            } catch {
+                responseHandler?(token, nil, error)
+            }
+        }
+        /*
         deviceTokens.forEach() {[weak self] token in
             guard let strongSelf = self else {
                 responseHandler?(token, nil, GCMSendMessageError.objectDealocated)
@@ -68,7 +79,7 @@ open class VaporGCM {
             } catch {
                 responseHandler?(token, nil, error)
             }
-        }
+        } */
     }
     
     /**
